@@ -5,9 +5,9 @@ import { Path, Svg } from 'react-native-svg';
 import { Point } from './interfaces/Point';
 import { spline } from './helpers/signature';
 
-interface SignatureCanvasProps {
+interface SimpleCanvasProps {
   onDragEvent?: () => void;
-  onSignatureChange?: (isEmpty: boolean) => void;
+  onCanvasChange?: (isEmpty: boolean) => void;
   strokeColor?: string;
   strokeWidth?: number;
   backgroundColor?: string;
@@ -15,7 +15,7 @@ interface SignatureCanvasProps {
   minPoints?: number;
 }
 
-export interface SignatureCanvasRef {
+export interface SimpleCanvasRef {
   resetImage: () => void;
   getSVG: () => RefObject<Svg>;
   isEmpty: () => boolean;
@@ -23,14 +23,14 @@ export interface SignatureCanvasRef {
   setPoints: (points: Point[]) => void;
 }
 
-export const clearCanvas = (ref: MutableRefObject<SignatureCanvasRef | null>) => {
+export const clearCanvas = (ref: MutableRefObject<SimpleCanvasRef | null>) => {
   ref.current?.resetImage();
 }; 
 
-export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasProps>(
+export const SimpleCanvas = forwardRef<SimpleCanvasRef, SimpleCanvasProps>(
   ({ 
     onDragEvent,
-    onSignatureChange,
+    onCanvasChange,
     strokeColor = 'black',
     strokeWidth = 3,
     backgroundColor = 'transparent',
@@ -53,8 +53,8 @@ export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasPro
     const resetImage = useCallback(() => {
       setPaths([]);
       pointsRef.current = [];
-      onSignatureChange?.(true);
-    }, [onSignatureChange]);
+      onCanvasChange?.(true);
+    }, [onCanvasChange]);
 
     const isEmpty = useCallback(() => {
       return paths.length === 0;
@@ -70,8 +70,8 @@ export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasPro
       pointsRef.current = newPoints;
       const path = spline(newPoints, 1, false);
       setPaths([path]);
-      onSignatureChange?.(false);
-    }, [minPoints, onSignatureChange]);
+      onCanvasChange?.(false);
+    }, [minPoints, onCanvasChange]);
 
     const onLayout = useCallback(() => {
       canvasRef.current?.measureInWindow((x, y) => {
@@ -111,7 +111,7 @@ export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasPro
                   newPaths[newPaths.length - 1] = path;
                   return newPaths;
                 });
-                onSignatureChange?.(false);
+                onCanvasChange?.(false);
               }
             }
           },
@@ -119,7 +119,7 @@ export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasPro
             isDrawing.current = false;
           },
         }),
-      [onDragEvent, addPoint, minPoints, onSignatureChange]
+      [onDragEvent, addPoint, minPoints, onCanvasChange]
     );
 
     useImperativeHandle(
@@ -167,7 +167,7 @@ export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasPro
   }
 );
 
-SignatureCanvas.displayName = 'SignatureCanvas';
+SimpleCanvas.displayName = 'SimpleCanvas';
 
 const styles = StyleSheet.create({
   container: {

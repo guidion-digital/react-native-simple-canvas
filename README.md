@@ -1,6 +1,6 @@
-# React Native Simple Canvas
+# SimpleCanvas
 
-A simple and customizable signature canvas component for React Native applications.
+A simple canvas component for React Native that allows drawing and signature capture.
 
 ## Features
 
@@ -17,7 +17,11 @@ A simple and customizable signature canvas component for React Native applicatio
 
 ```bash
 npm install react-native-simple-canvas
-# or
+```
+
+or
+
+```bash
 yarn add react-native-simple-canvas
 ```
 
@@ -33,10 +37,10 @@ This package requires the following peer dependencies:
 ```tsx
 import React, { useRef } from 'react';
 import { View, Button } from 'react-native';
-import { SignatureCanvas, SignatureCanvasRef, clearCanvas } from 'react-native-simple-canvas';
+import { SimpleCanvas, SimpleCanvasRef, clearCanvas } from 'react-native-simple-canvas';
 
 const App = () => {
-  const signatureRef = useRef<SignatureCanvasRef>(null);
+  const signatureRef = useRef<SimpleCanvasRef>(null);
 
   const handleClear = () => {
     clearCanvas(signatureRef);
@@ -44,12 +48,12 @@ const App = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <SignatureCanvas
+      <SimpleCanvas
         ref={signatureRef}
         strokeColor="blue"
         strokeWidth={3}
         backgroundColor="white"
-        onSignatureChange={(isEmpty) => console.log('Signature changed:', isEmpty)}
+        onCanvasChange={(isEmpty) => console.log('Canvas changed:', isEmpty)}
       />
       <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
         <Button title="Clear" onPress={handleClear} />
@@ -71,7 +75,7 @@ export default App;
 | `style` | ViewStyle | undefined | Custom styles for the container |
 | `minPoints` | number | 2 | Minimum points required for a valid signature |
 | `onDragEvent` | () => void | undefined | Callback when user starts drawing |
-| `onSignatureChange` | (isEmpty: boolean) => void | undefined | Callback when signature state changes |
+| `onCanvasChange` | (isEmpty: boolean) => void | undefined | Callback when canvas state changes |
 | `clearCanvas` | boolean | false | Set to true to clear the canvas |
 
 ## Methods
@@ -79,7 +83,7 @@ export default App;
 All methods are accessible through the component ref:
 
 ```tsx
-const signatureRef = useRef<SignatureCanvasRef>(null);
+const signatureRef = useRef<SimpleCanvasRef>(null);
 ```
 
 | Method | Description |
@@ -98,9 +102,9 @@ interface Point {
   y: number;
 }
 
-interface SignatureCanvasProps {
+interface SimpleCanvasProps {
   onDragEvent?: () => void;
-  onSignatureChange?: (isEmpty: boolean) => void;
+  onCanvasChange?: (isEmpty: boolean) => void;
   strokeColor?: string;
   strokeWidth?: number;
   backgroundColor?: string;
@@ -108,7 +112,7 @@ interface SignatureCanvasProps {
   minPoints?: number;
 }
 
-interface SignatureCanvasRef {
+interface SimpleCanvasRef {
   resetImage: () => void;
   getSVG: () => RefObject<Svg>;
   isEmpty: () => boolean;
@@ -116,11 +120,3 @@ interface SignatureCanvasRef {
   setPoints: (points: Point[]) => void;
 }
 ```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License
