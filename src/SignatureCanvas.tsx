@@ -1,4 +1,4 @@
-import React, { forwardRef, RefObject, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, RefObject, useCallback, useImperativeHandle, useMemo, useRef, useState, MutableRefObject } from 'react';
 import { PanResponder, StyleSheet, View, ViewStyle } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
@@ -21,8 +21,11 @@ export interface SignatureCanvasRef {
   isEmpty: () => boolean;
   getPoints: () => Point[];
   setPoints: (points: Point[]) => void;
-  clear: () => void;
 }
+
+export const clearCanvas = (ref: MutableRefObject<SignatureCanvasRef | null>) => {
+  ref.current?.resetImage();
+}; 
 
 export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasProps>(
   ({ 
@@ -52,10 +55,6 @@ export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasPro
       pointsRef.current = [];
       onSignatureChange?.(true);
     }, [onSignatureChange]);
-
-    const clear = useCallback(() => {
-      resetImage();
-    }, [resetImage]);
 
     const isEmpty = useCallback(() => {
       return paths.length === 0;
@@ -130,10 +129,9 @@ export const SignatureCanvas = forwardRef<SignatureCanvasRef, SignatureCanvasPro
         resetImage,
         isEmpty,
         getPoints,
-        setPoints,
-        clear
+        setPoints
       }),
-      [resetImage, isEmpty, getPoints, setPoints, clear]
+      [resetImage, isEmpty, getPoints, setPoints]
     );
 
     const pathElements = useMemo(

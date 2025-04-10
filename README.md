@@ -33,23 +33,13 @@ This package requires the following peer dependencies:
 ```tsx
 import React, { useRef } from 'react';
 import { View, Button } from 'react-native';
-import SignatureCanvas, { SignatureCanvasRef } from 'react-native-simple-canvas';
+import { SignatureCanvas, SignatureCanvasRef, clearCanvas } from 'react-native-simple-canvas';
 
 const App = () => {
   const signatureRef = useRef<SignatureCanvasRef>(null);
 
-  const handleSave = () => {
-    if (signatureRef.current) {
-      const svg = signatureRef.current.getSVG();
-      const points = signatureRef.current.getPoints();
-      const isEmpty = signatureRef.current.isEmpty();
-      
-      console.log('Signature data:', { svg, points, isEmpty });
-    }
-  };
-
   const handleClear = () => {
-    signatureRef.current?.clear();
+    clearCanvas(signatureRef);
   };
 
   return (
@@ -62,7 +52,6 @@ const App = () => {
         onSignatureChange={(isEmpty) => console.log('Signature changed:', isEmpty)}
       />
       <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
-        <Button title="Save" onPress={handleSave} />
         <Button title="Clear" onPress={handleClear} />
       </View>
     </View>
@@ -83,6 +72,7 @@ export default App;
 | `minPoints` | number | 2 | Minimum points required for a valid signature |
 | `onDragEvent` | () => void | undefined | Callback when user starts drawing |
 | `onSignatureChange` | (isEmpty: boolean) => void | undefined | Callback when signature state changes |
+| `clearCanvas` | boolean | false | Set to true to clear the canvas |
 
 ## Methods
 
@@ -99,7 +89,6 @@ const signatureRef = useRef<SignatureCanvasRef>(null);
 | `isEmpty()` | Returns true if the canvas is empty |
 | `getPoints()` | Returns an array of raw signature points |
 | `setPoints(points: Point[])` | Sets the signature from existing points |
-| `clear()` | Clears the canvas |
 
 ## Types
 
@@ -125,7 +114,6 @@ interface SignatureCanvasRef {
   isEmpty: () => boolean;
   getPoints: () => Point[];
   setPoints: (points: Point[]) => void;
-  clear: () => void;
 }
 ```
 
