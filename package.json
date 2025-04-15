@@ -2,8 +2,12 @@
   "name": "react-native-simple-canvas",
   "version": "1.0.0",
   "main": "index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "semantic-release": "semantic-release",
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -11,10 +15,12 @@
     "react-native-svg": "^15.4.0"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Guidion",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
-    "@types/react": "^18.3.20"
+    "@gdn/semantic-release-native": "^1.4.6",
+    "@types/react": "^18.3.20",
+    "typescript": "^5.8.3"
   }
 }
