@@ -1,0 +1,27 @@
+name: Run tests, build and releases on push to prod
+
+on:
+  push:
+    branches:
+      - "prod"
+
+jobs:
+  test_and_build:
+    name: Test and Build
+    uses: guidion-digital/node-workflows/.github/workflows/partial-test-build.yaml@0.1.1
+    secrets: inherit
+    with:
+      concurrency_name: "${{github.ref}}"
+      enable_linting: false
+#   release:
+#     name: Release
+#     uses: guidion-digital/node-workflows/.github/workflows/semantic-release.yaml@0.1.1
+#     needs: test_and_build
+#     secrets: inherit
+#     permissions:
+#       contents: write
+#       issues: write
+#       pull-requests: write
+#       id-token: write
+#     with:
+#       environment_name: "prod"
