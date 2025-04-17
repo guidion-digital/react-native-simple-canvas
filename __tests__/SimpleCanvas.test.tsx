@@ -51,7 +51,8 @@ const mockOutOfContainerMoveEvent = {
 
 describe('SimpleCanvas', () => {
   it('should render', () => {
-    const tree = renderer.create(<SimpleCanvas onDragEvent={() => {}} onCanvasChange={() => {}} />).toJSON();
+    const tree = renderer.create(
+    <SimpleCanvas onDragEvent={() => {}} onCanvasChange={() => {}} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
