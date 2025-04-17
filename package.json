@@ -9,7 +9,8 @@
     "coverage": "npm run build && npx jest --coverage",
     "build": "npx rimraf dist && tsc",
     "semantic-release": "semantic-release",
-    "lint": "eslint -c eslint.config.mjs \"?(src|__tests__)/**/*.ts{,x}\""
+    "lint": "eslint -c eslint.config.mjs \"?(src|__tests__)/**/*.ts{,x}\"",
+    "tsc": "tsc"
   },
   "peerDependencies": {
     "react": ">=18.2.0",
