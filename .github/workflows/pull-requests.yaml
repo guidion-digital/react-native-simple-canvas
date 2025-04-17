@@ -13,5 +13,4 @@ jobs:
     secrets: inherit
     with:
       concurrency_name: "${{github.ref}}"
-      enable_npmrc_echo: true
       enable_build: true
