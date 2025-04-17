@@ -125,7 +125,7 @@ export const SimpleCanvas = forwardRef<SimpleCanvasRef, SimpleCanvasProps>(
     useImperativeHandle(
       ref,
       () => ({
-        getSVG: () => svgRef,
+        getSVG: () => svgRef as unknown as RefObject<Svg>,
         resetImage,
         isEmpty,
         getPoints,

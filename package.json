@@ -4,23 +4,36 @@
   "main": "index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "semantic-release": "semantic-release",
-    "build": "tsc",
-    "prepare": "npm run build"
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "coverage": "npm run build && npx jest --coverage",
+    "build": "npx rimraf dist && tsc",
+    "semantic-release": "semantic-release"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-native": "^0.74.2",
-    "react-native-svg": "^15.4.0"
+    "react": ">=18.2.0",
+    "react-native": ">=0.74.2",
+    "react-native-svg": ">=15.4.0"
   },
   "keywords": [],
   "author": "Guidion",
   "license": "MIT",
   "description": "",
   "devDependencies": {
-    "@gdn/semantic-release-native": "^1.4.6",
-    "@types/react": "^18.3.20",
-    "typescript": "^5.8.3"
+    "@types/jest": "^29.5.2",
+    "@types/react": "^18.2.0",
+    "@types/react-test-renderer": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "eslint": "^8.43.0",
+    "eslint-plugin-jest": "^28.6.2",
+    "jest": "^29.5.0",
+    "react": "^18.2.0",
+    "react-native": "^0.74.2",
+    "react-native-svg": "^15.4.0",
+    "react-test-renderer": "^18.2.0",
+    "rimraf": "^5.0.0",
+    "semantic-release": "^24.0.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "5.0.4"
   }
 }

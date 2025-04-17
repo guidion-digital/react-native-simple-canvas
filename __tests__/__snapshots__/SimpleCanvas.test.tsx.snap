@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SimpleCanvas should render 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    onLayout={[Function]}
+    onMoveShouldSetResponder={[Function]}
+    onMoveShouldSetResponderCapture={[Function]}
+    onResponderEnd={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderReject={[Function]}
+    onResponderRelease={[Function]}
+    onResponderStart={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onStartShouldSetResponderCapture={[Function]}
+    style={
+      [
+        {
+          "borderColor": "#ccc",
+          "borderWidth": 1,
+          "flex": 1,
+        },
+        {
+          "backgroundColor": "transparent",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      bbHeight="100%"
+      bbWidth="100%"
+      focusable={false}
+      height="100%"
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          {
+            "flex": 0,
+            "height": "100%",
+            "width": "100%",
+          },
+        ]
+      }
+      width="100%"
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      />
+    </RNSVGSvgView>
+  </View>
+</View>
+`;
+
+exports[`SimpleCanvas stops drawing when out of container 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    onLayout={[Function]}
+    onMoveShouldSetResponder={[Function]}
+    onMoveShouldSetResponderCapture={[Function]}
+    onResponderEnd={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderReject={[Function]}
+    onResponderRelease={[Function]}
+    onResponderStart={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onStartShouldSetResponderCapture={[Function]}
+    style={
+      [
+        {
+          "borderColor": "#ccc",
+          "borderWidth": 1,
+          "flex": 1,
+        },
+        {
+          "backgroundColor": "transparent",
+        },
+      ]
+    }
+  >
+    <RNSVGSvgView
+      bbHeight="100%"
+      bbWidth="100%"
+      focusable={false}
+      height="100%"
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          {
+            "flex": 0,
+            "height": "100%",
+            "width": "100%",
+          },
+        ]
+      }
+      width="100%"
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGPath
+          d="M 192 124 C 215.5 158.83333333333334 309.5 298.1666666666667 333 333"
+          fill={null}
+          propList={
+            [
+              "fill",
+              "stroke",
+              "strokeWidth",
+              "strokeLinecap",
+              "strokeLinejoin",
+            ]
+          }
+          stroke={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          strokeLinecap={1}
+          strokeLinejoin={1}
+          strokeWidth={3}
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+</View>
+`;
