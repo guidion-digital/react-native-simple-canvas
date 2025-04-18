@@ -1,4 +1,13 @@
-import React, { forwardRef, RefObject, useCallback, useImperativeHandle, useMemo, useRef, useState, MutableRefObject } from 'react';
+import React, {
+  forwardRef,
+  MutableRefObject,
+  RefObject,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { PanResponder, StyleSheet, View, ViewStyle } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
@@ -25,10 +34,10 @@ export interface SimpleCanvasRef {
 
 export const clearCanvas = (ref: MutableRefObject<SimpleCanvasRef | null>) => {
   ref.current?.resetImage();
-}; 
+};
 
 export const SimpleCanvas = forwardRef<SimpleCanvasRef, SimpleCanvasProps>(
-  ({ 
+  ({
     onDragEvent,
     onCanvasChange,
     strokeColor = 'black',
@@ -66,7 +75,7 @@ export const SimpleCanvas = forwardRef<SimpleCanvasRef, SimpleCanvasProps>(
 
     const setPoints = useCallback((newPoints: Point[]) => {
       if (newPoints.length < minPoints) return;
-      
+
       pointsRef.current = newPoints;
       const path = spline(newPoints, 1, false);
       setPaths([path]);
