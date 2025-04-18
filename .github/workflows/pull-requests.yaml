@@ -1,0 +1,16 @@
+# Runs tests and builds for every pull request creation and update event.
+
+name: Run tests and build on PR
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  test_and_build:
+    name: Run tests and build on PR
+    uses: guidion-digital/node-workflows/.github/workflows/partial-test-build.yaml@0.1.6
+    secrets: inherit
+    with:
+      concurrency_name: "${{github.ref}}"
+      enable_build: true
