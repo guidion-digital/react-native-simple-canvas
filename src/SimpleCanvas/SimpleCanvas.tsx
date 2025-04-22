@@ -11,8 +11,8 @@ import React, {
 import { PanResponder, StyleSheet, View, ViewStyle } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
-import { Point } from './interfaces/Point';
-import { spline } from './helpers/signature';
+import { Point } from '../interfaces/Point';
+import { spline } from '../helpers/signature';
 
 interface SimpleCanvasProps {
   onDragEvent?: () => void;
