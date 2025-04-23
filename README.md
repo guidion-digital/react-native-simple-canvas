@@ -120,3 +120,42 @@ interface SimpleCanvasRef {
   setPoints: (points: Point[]) => void;
 }
 ```
+
+## Troubleshooting
+
+### Invalid Hook Call Error
+
+If you encounter an error like: `Invalid hook call. Hooks can only be called inside of the body of a function component` or `Cannot read property 'useState' of null`, this is typically due to React dependency conflicts. To fix this:
+
+1. **Ensure React versions match**: Make sure your project and all dependencies use compatible React versions.
+
+2. **Fix duplicate React installations**: This error often occurs when multiple versions of React exist in your node_modules. Run this in your main project:
+
+   ```bash
+   npm ls react
+   ```
+
+   If you see multiple versions, consider using npm/yarn resolutions to force a single version:
+
+   ```json
+   "resolutions": {
+     "react": "18.2.0",
+     "react-dom": "18.2.0"
+   }
+   ```
+
+3. **Set up proper module resolution**: If using this library in a monorepo or via local path, ensure your bundler (Metro) is configured to resolve React correctly for all packages:
+
+   ```js
+   // metro.config.js
+   module.exports = {
+     resolver: {
+       extraNodeModules: {
+         'react': path.resolve(__dirname, 'node_modules/react'),
+         'react-native': path.resolve(__dirname, 'node_modules/react-native')
+       }
+     }
+   };
+   ```
+
+4. **Check for peer dependency mismatches**: Verify that this library's peer dependencies align with your project versions.
