@@ -48,5 +48,8 @@
     "branches": [
       "prod"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
