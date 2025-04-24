@@ -1,3 +1,3 @@
-import { SimpleCanvas, SimpleCanvasRef, clearCanvas } from './SimpleCanvas/SimpleCanvas';
+import { clearCanvas, SimpleCanvas, SimpleCanvasRef } from './SimpleCanvas/SimpleCanvas';
 
-export { SimpleCanvas, SimpleCanvasRef, clearCanvas };
+export { clearCanvas, SimpleCanvas, SimpleCanvasRef};
