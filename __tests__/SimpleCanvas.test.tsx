@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { SimpleCanvas, SimpleCanvasRef } from '../src/SimpleCanvas';
+import { SimpleCanvas, SimpleCanvasRef } from '../src/SimpleCanvas/SimpleCanvas';
 import renderer, { act, create } from 'react-test-renderer';
 import { View } from 'react-native';
 

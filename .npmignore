@@ -1,8 +1,27 @@
-src/
+# Dependencies
 node_modules/
-config
+
+
+# Tests
+__tests__/
+.jest/
 jest.config.js
-package-lock.json
-tsconfig.json
+tsconfig.test.json
+
+# Development files
+.git/
+.github/
+.gitignore
 .npmrc
-__tests__
+eslint.config.mjs
+*.log
+*.lock
+src/
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
