@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
 
+
 # Tests
 __tests__/
 .jest/
@@ -15,6 +16,7 @@ tsconfig.test.json
 eslint.config.mjs
 *.log
 *.lock
+src/
 
 # IDE files
 .idea/
