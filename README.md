@@ -13,6 +13,9 @@ A simple canvas component for React Native that allows drawing and signature cap
 - TypeScript support
 - Lightweight and performant
 
+## Demo
+
+<img src="https://private-user-images.githubusercontent.com/5255330/437026438-cc1973ff-88d0-46ec-ad8f-1faae985ac4d.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDU0OTkzNzgsIm5iZiI6MTc0NTQ5OTA3OCwicGF0aCI6Ii81MjU1MzMwLzQzNzAyNjQzOC1jYzE5NzNmZi04OGQwLTQ2ZWMtYWQ4Zi0xZmFhZTk4NWFjNGQuZ2lmP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI1MDQyNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNTA0MjRUMTI1MTE4WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NWQ3YzQzYzU2YmI4MzdjMDFiYmUyMjdjMzJjZDMzYWNhYjNlODg4MTAwMzFjYjRjZDQzZjI4ZTk3ZGRjZmNmMCZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.pJLApYjAmx7GChhQNilSskiVyz1WSrIJmZWjfsBnVZ8" alt="SimpleCanvas Demo" width="50%">
 ## Installation
 
 ```bash
@@ -120,3 +123,42 @@ interface SimpleCanvasRef {
   setPoints: (points: Point[]) => void;
 }
 ```
+
+## Troubleshooting
+
+### Invalid Hook Call Error
+
+If you encounter an error like: `Invalid hook call. Hooks can only be called inside of the body of a function component` or `Cannot read property 'useState' of null`, this is typically due to React dependency conflicts. To fix this:
+
+1. **Ensure React versions match**: Make sure your project and all dependencies use compatible React versions.
+
+2. **Fix duplicate React installations**: This error often occurs when multiple versions of React exist in your node_modules. Run this in your main project:
+
+   ```bash
+   npm ls react
+   ```
+
+   If you see multiple versions, consider using npm/yarn resolutions to force a single version:
+
+   ```json
+   "resolutions": {
+     "react": "18.2.0",
+     "react-dom": "18.2.0"
+   }
+   ```
+
+3. **Set up proper module resolution**: If using this library in a monorepo or via local path, ensure your bundler (Metro) is configured to resolve React correctly for all packages:
+
+   ```js
+   // metro.config.js
+   module.exports = {
+     resolver: {
+       extraNodeModules: {
+         'react': path.resolve(__dirname, 'node_modules/react'),
+         'react-native': path.resolve(__dirname, 'node_modules/react-native')
+       }
+     }
+   };
+   ```
+
+4. **Check for peer dependency mismatches**: Verify that this library's peer dependencies align with your project versions.
