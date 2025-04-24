@@ -40,7 +40,7 @@ This package requires the following peer dependencies:
 ```tsx
 import React, { useRef } from 'react';
 import { View, Button } from 'react-native';
-import { SimpleCanvas, SimpleCanvasRef, clearCanvas } from 'react-native-simple-canvas';
+import { SimpleCanvas, SimpleCanvasRef, clearCanvas } from '@gdn/react-native-simple-canvas';
 
 const App = () => {
   const signatureRef = useRef<SimpleCanvasRef>(null);
