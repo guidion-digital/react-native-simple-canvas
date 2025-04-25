@@ -3,6 +3,22 @@
   "version": "0.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "keywords": [
+    "react-native",
+    "signature",
+    "signature-pad",
+    "signature-capture",
+    "signature-capture-react-native",
+    "signature-canvas",
+    "signature-canvas-react-native",
+    "canvas",
+    "simple-canvas",
+    "simple-canvas-react-native",
+    "capture",
+    "capture-react-native",
+    "capture-canvas",
+    "capture-canvas-react-native"
+  ],
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
@@ -18,7 +34,6 @@
     "react-native-svg": ">=15.4.0",
     "react-test-renderer": ">=18.2.0"
   },
-  "keywords": [],
   "author": "Guidion",
   "license": "MIT",
   "description": "",
