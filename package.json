@@ -51,5 +51,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guidion-digital/react-native-simple-canvas.git"
   }
 }
