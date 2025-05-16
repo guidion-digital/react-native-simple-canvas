@@ -8,10 +8,11 @@ on:
 jobs:
   test_and_build:
     name: Test and Build
-    uses: guidion-digital/node-workflows/.github/workflows/partial-test-build.yaml@0.1.1
+    uses: guidion-digital/node-workflows/.github/workflows/partial-test-build.yaml@1.0.2
     secrets: inherit
     with:
       concurrency_name: "${{github.ref}}"
+      node_version: "22.15.1"
       enable_linting: false
   release:
     name: Release
