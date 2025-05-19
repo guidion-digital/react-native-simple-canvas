@@ -9,8 +9,9 @@ on:
 jobs:
   test_and_build:
     name: Run tests and build on PR
-    uses: guidion-digital/node-workflows/.github/workflows/partial-test-build.yaml@0.1.6
+    uses: guidion-digital/node-workflows/.github/workflows/partial-test-build.yaml@1.0.2
     secrets: inherit
     with:
+      node_version: "22.15.1"
       concurrency_name: "${{github.ref}}"
       enable_build: true
