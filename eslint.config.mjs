@@ -26,10 +26,12 @@ export default [
       '@stylistic/object-curly-spacing': ['error', 'always'],
       'no-restricted-imports': [
         'error',
-        'lodash',
-        'date-fns', {
-          name: 'aws-sdk',
-          meßssage: 'Please use @aws-**** V3 instead.',
+        {
+          patterns: ['lodash', 'date-fns'],
+          paths: [{
+            name: 'aws-sdk',
+            message: 'Please use @aws-**** V3 instead.',
+          }],
         },
       ],
       '@stylistic/key-spacing': ['error'],
