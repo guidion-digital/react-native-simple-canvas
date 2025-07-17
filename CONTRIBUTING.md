@@ -7,7 +7,7 @@ We love contributions! This document explains how to contribute to the React Nat
 ### Prerequisites
 
 - Node.js >= 18
-- npm or yarn
+- npm
 - React Native development environment (for testing)
 - For iOS development: Xcode and CocoaPods
 - For Android development: Android Studio and SDK
