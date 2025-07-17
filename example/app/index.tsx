@@ -3,6 +3,7 @@ import {
   Alert,
   AppRegistry,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -64,6 +65,8 @@ function App(): React.ReactElement {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+
       <View style={styles.containerView}>
 
         <SimpleCanvas
