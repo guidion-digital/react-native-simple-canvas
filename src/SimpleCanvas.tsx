@@ -1,9 +1,6 @@
 import React, {
-  forwardRef,
-  MutableRefObject,
   RefObject,
   useCallback,
-  useImperativeHandle,
   useMemo,
   useRef,
   useState
@@ -15,6 +12,7 @@ import { Point } from './interfaces/Point';
 import { spline } from './helpers/canvas';
 
 interface SimpleCanvasProps {
+  ref: RefObject<SimpleCanvasRef | null>;
   onDragEvent?: () => void;
   onCanvasChange?: (isEmpty: boolean) => void;
   strokeColor?: string;
@@ -32,149 +30,144 @@ export interface SimpleCanvasRef {
   setPoints: (points: Point[]) => void;
 }
 
-export const clearCanvas = (ref: MutableRefObject<SimpleCanvasRef | null>) => {
+export const clearCanvas = (ref: RefObject<SimpleCanvasRef | null>) => {
   ref.current?.resetImage();
 };
 
-export const SimpleCanvas = forwardRef<SimpleCanvasRef, SimpleCanvasProps>(
-  ({
-    onDragEvent,
-    onCanvasChange,
-    strokeColor = 'black',
-    strokeWidth = 3,
-    backgroundColor = 'transparent',
-    style,
-    minPoints = 2
-  }, ref) => {
-    const [paths, setPaths] = useState<string[]>([]);
-    const pointsRef = useRef<Point[]>([]);
-    const svgRef = useRef(null);
-    const isDrawing = useRef(false);
+export const SimpleCanvas = ({
+  onDragEvent,
+  onCanvasChange,
+  strokeColor = 'black',
+  strokeWidth = 3,
+  backgroundColor = 'transparent',
+  style,
+  minPoints = 2,
+  ref,
+}: SimpleCanvasProps) => {
+  const [paths, setPaths] = useState<string[]>([]);
+  const pointsRef = useRef<Point[]>([]);
+  const svgRef = useRef(null);
+  const isDrawing = useRef(false);
 
-    const canvasRef = useRef<View>(null);
-    const canvasOffset = useRef({ x: 0, y: 0 });
+  const canvasRef = useRef<View>(null);
+  const canvasOffset = useRef({ x: 0, y: 0 });
 
-    const addPoint = useCallback((point: Point) => {
-      pointsRef.current.push(point);
-      return true;
-    }, []);
+  const addPoint = useCallback((point: Point) => {
+    pointsRef.current.push(point);
+    return true;
+  }, []);
 
-    const resetImage = useCallback(() => {
-      setPaths([]);
-      pointsRef.current = [];
-      onCanvasChange?.(true);
-    }, [onCanvasChange]);
+  const resetImage = useCallback(() => {
+    setPaths([]);
+    pointsRef.current = [];
+    onCanvasChange?.(true);
+  }, [onCanvasChange]);
 
-    const isEmpty = useCallback(() => {
-      return paths.length === 0;
-    }, [paths]);
+  const isEmpty = useCallback(() => {
+    return paths.length === 0;
+  }, [paths]);
 
-    const getPoints = useCallback(() => {
-      return [...pointsRef.current];
-    }, []);
+  const getPoints = useCallback(() => {
+    return [...pointsRef.current];
+  }, []);
 
-    const setPoints = useCallback((newPoints: Point[]) => {
-      if (newPoints.length < minPoints) return;
+  const setPoints = useCallback((newPoints: Point[]) => {
+    if (newPoints.length < minPoints) return;
 
-      pointsRef.current = newPoints;
-      const path = spline(newPoints, 1, false);
-      setPaths([path]);
-      onCanvasChange?.(false);
-    }, [minPoints, onCanvasChange]);
+    pointsRef.current = newPoints;
+    const path = spline(newPoints, 1, false);
+    setPaths([path]);
+    onCanvasChange?.(false);
+  }, [minPoints, onCanvasChange]);
 
-    const onLayout = useCallback(() => {
-      canvasRef.current?.measureInWindow((x, y) => {
-        canvasOffset.current = { x, y };
-      });
-    }, []);
+  const onLayout = useCallback(() => {
+    canvasRef.current?.measureInWindow((x, y) => {
+      canvasOffset.current = { x, y };
+    });
+  }, []);
 
-    const panResponder = useMemo(
-      () =>
-        PanResponder.create({
-          onStartShouldSetPanResponder: () => true,
-          onMoveShouldSetPanResponder: () => true,
-          onPanResponderGrant: (event) => {
-            const { pageX, pageY } = event.nativeEvent;
-            const point = {
-              x: pageX - canvasOffset.current.x,
-              y: pageY - canvasOffset.current.y
-            };
-            isDrawing.current = true;
-            pointsRef.current = [point];
-            setPaths(prevPaths => [...prevPaths, `M ${point.x} ${point.y}`]);
-            onDragEvent?.();
-          },
-          onPanResponderMove: (event) => {
-            if (!isDrawing.current) return;
-            const { pageX, pageY } = event.nativeEvent;
-            const point = {
-              x: pageX - canvasOffset.current.x,
-              y: pageY - canvasOffset.current.y
-            };
+  const panResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onMoveShouldSetPanResponder: () => true,
+        onPanResponderGrant: (event) => {
+          const { pageX, pageY } = event.nativeEvent;
+          const point = {
+            x: pageX - canvasOffset.current.x,
+            y: pageY - canvasOffset.current.y
+          };
+          isDrawing.current = true;
+          pointsRef.current = [point];
+          setPaths(prevPaths => [...prevPaths, `M ${point.x} ${point.y}`]);
+          onDragEvent?.();
+        },
+        onPanResponderMove: (event) => {
+          if (!isDrawing.current) return;
+          const { pageX, pageY } = event.nativeEvent;
+          const point = {
+            x: pageX - canvasOffset.current.x,
+            y: pageY - canvasOffset.current.y
+          };
 
-            if (addPoint(point)) {
-              if (pointsRef.current.length >= minPoints) {
-                const path = spline(pointsRef.current, 1, false);
-                setPaths(prevPaths => {
-                  const newPaths = [...prevPaths];
-                  newPaths[newPaths.length - 1] = path;
-                  return newPaths;
-                });
-                onCanvasChange?.(false);
-              }
+          if (addPoint(point)) {
+            if (pointsRef.current.length >= minPoints) {
+              const path = spline(pointsRef.current, 1, false);
+              setPaths(prevPaths => {
+                const newPaths = [...prevPaths];
+                newPaths[newPaths.length - 1] = path;
+                return newPaths;
+              });
+              onCanvasChange?.(false);
             }
-          },
-          onPanResponderRelease: () => {
-            isDrawing.current = false;
-          },
-        }),
-      [onDragEvent, addPoint, minPoints, onCanvasChange]
-    );
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        getSVG: () => svgRef as unknown as RefObject<Svg>,
-        resetImage,
-        isEmpty,
-        getPoints,
-        setPoints
+          }
+        },
+        onPanResponderRelease: () => {
+          isDrawing.current = false;
+        },
       }),
-      [resetImage, isEmpty, getPoints, setPoints]
-    );
+    [onDragEvent, addPoint, minPoints, onCanvasChange]
+  );
 
-    const pathElements = useMemo(
-      () =>
-        paths.map((path, index) => (
-          <Path
-            key={index}
-            d={path}
-            stroke={strokeColor}
-            strokeWidth={strokeWidth}
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        )),
-      [paths, strokeColor, strokeWidth]
-    );
+  ref.current = {
+    getSVG: () => svgRef as unknown as RefObject<Svg>,
+    resetImage,
+    isEmpty,
+    getPoints,
+    setPoints
+  };
 
-    return (
-      <View style={[styles.container, style]}>
-        <View
-          ref={canvasRef}
-          onLayout={onLayout}
-          style={[styles.signatureBox, { backgroundColor }]}
-          {...panResponder.panHandlers}
-        >
-          <Svg ref={svgRef} height="100%" width="100%">
-            {pathElements}
-          </Svg>
-        </View>
+  const pathElements = useMemo(
+    () =>
+      paths.map((path, index) => (
+        <Path
+          key={index}
+          d={path}
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      )),
+    [paths, strokeColor, strokeWidth]
+  );
+
+  return (
+    <View style={[styles.container, style]}>
+      <View
+        ref={canvasRef}
+        onLayout={onLayout}
+        style={[styles.canvas, { backgroundColor }]}
+        {...panResponder.panHandlers}
+      >
+        <Svg ref={svgRef} height="100%" width="100%">
+          {pathElements}
+        </Svg>
       </View>
-    );
-  }
-);
+    </View>
+  );
+};
 
 SimpleCanvas.displayName = 'SimpleCanvas';
 
@@ -182,7 +175,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  signatureBox: {
+  canvas: {
     flex: 1,
     borderWidth: 1,
     borderColor: '#ccc',
