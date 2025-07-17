@@ -12,7 +12,7 @@ import { Point } from './interfaces/Point';
 import { spline } from './helpers/canvas';
 
 interface SimpleCanvasProps {
-  ref: RefObject<SimpleCanvasRef | null>;
+  ref?: RefObject<SimpleCanvasRef | null>;
   onDragEvent?: () => void;
   onCanvasChange?: (isEmpty: boolean) => void;
   strokeColor?: string;
@@ -24,7 +24,7 @@ interface SimpleCanvasProps {
 
 export interface SimpleCanvasRef {
   resetImage: () => void;
-  getSVG: () => RefObject<Svg>;
+  getSVG: () => RefObject<Svg | null>;
   isEmpty: () => boolean;
   getPoints: () => Point[];
   setPoints: (points: Point[]) => void;
@@ -46,7 +46,7 @@ export const SimpleCanvas = ({
 }: SimpleCanvasProps) => {
   const [paths, setPaths] = useState<string[]>([]);
   const pointsRef = useRef<Point[]>([]);
-  const svgRef = useRef(null);
+  const svgRef = useRef<Svg | null>(null);
   const isDrawing = useRef(false);
 
   const canvasRef = useRef<View>(null);
@@ -129,12 +129,16 @@ export const SimpleCanvas = ({
     [onDragEvent, addPoint, minPoints, onCanvasChange]
   );
 
-  ref.current = {
-    getSVG: () => svgRef as unknown as RefObject<Svg>,
+  const refValue = useMemo<SimpleCanvasRef>(() => ({
+    getSVG: () => svgRef,
     resetImage,
     isEmpty,
     getPoints,
     setPoints
+  }), [resetImage, isEmpty, getPoints, setPoints]);
+
+  if (ref) {
+    ref.current = refValue;
   };
 
   const pathElements = useMemo(
