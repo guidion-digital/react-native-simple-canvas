@@ -1,6 +1,7 @@
 import React, {
   RefObject,
   useCallback,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState
@@ -129,17 +130,13 @@ export const SimpleCanvas = ({
     [onDragEvent, addPoint, minPoints, onCanvasChange]
   );
 
-  const refValue = useMemo<SimpleCanvasRef>(() => ({
+  useImperativeHandle<SimpleCanvasRef, SimpleCanvasRef>(ref, () => ({
     getSVG: () => svgRef,
     resetImage,
     isEmpty,
     getPoints,
     setPoints
   }), [resetImage, isEmpty, getPoints, setPoints]);
-
-  if (ref) {
-    ref.current = refValue;
-  };
 
   const pathElements = useMemo(
     () =>
