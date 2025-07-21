@@ -13,13 +13,13 @@ import { clearCanvas, SimpleCanvas } from '@gdn/react-native-simple-canvas';
 import type { SimpleCanvasRef } from '@gdn/react-native-simple-canvas';
 
 function App(): React.ReactElement {
-  const signatureRef = useRef<SimpleCanvasRef>(null);
+  const canvasRef = useRef<SimpleCanvasRef>(null);
   const [strokeColor, setStrokeColor] = useState('#000000');
   const [strokeWidth, setStrokeWidth] = useState(3);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
   const handleClear = () => {
-    clearCanvas(signatureRef);
+    clearCanvas(canvasRef);
     setIsEmpty(true);
   };
 
@@ -28,7 +28,7 @@ function App(): React.ReactElement {
   };
 
   const handleExportSVG = () => {
-    const svg = signatureRef.current?.getSVG();
+    const svg = canvasRef.current?.getSVG();
 
     if (svg) {
       Alert.alert('SVG', 'SVG reference obtained - check console for details');
@@ -70,7 +70,7 @@ function App(): React.ReactElement {
       <View style={styles.containerView}>
 
         <SimpleCanvas
-          ref={signatureRef}
+          ref={canvasRef}
           onDragEvent={handleDragEvent}
           strokeColor={strokeColor}
           strokeWidth={strokeWidth}

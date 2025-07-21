@@ -4,11 +4,11 @@ A simple canvas component for React Native that allows drawing and signature cap
 
 ## Features
 
-- Smooth signature drawing
+- Smooth canvas drawing
 - Customizable stroke color and width
-- Get signature as SVG
-- Get raw signature points
-- Set signature from existing points
+- Get canvas as SVG
+- Get raw canvas points
+- Set canvas from existing points
 - Clear and reset functionality
 - TypeScript support
 - Lightweight and performant
@@ -43,16 +43,16 @@ import { View, Button } from 'react-native';
 import { SimpleCanvas, SimpleCanvasRef, clearCanvas } from '@gdn/react-native-simple-canvas';
 
 const App = () => {
-  const signatureRef = useRef<SimpleCanvasRef>(null);
+  const canvasRef = useRef<SimpleCanvasRef>(null);
 
   const handleClear = () => {
-    clearCanvas(signatureRef);
+    clearCanvas(canvasRef);
   };
 
   return (
     <View style={{ flex: 1 }}>
       <SimpleCanvas
-        ref={signatureRef}
+        ref={canvasRef}
         strokeColor="blue"
         strokeWidth={3}
         backgroundColor="white"
@@ -72,11 +72,11 @@ export default App;
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `strokeColor` | string | 'black' | Color of the signature stroke |
-| `strokeWidth` | number | 3 | Width of the signature stroke |
+| `strokeColor` | string | 'black' | Color of the line stroke |
+| `strokeWidth` | number | 3 | Width of the line stroke |
 | `backgroundColor` | string | 'transparent' | Background color of the canvas |
 | `style` | ViewStyle | undefined | Custom styles for the container |
-| `minPoints` | number | 2 | Minimum points required for a valid signature |
+| `minPoints` | number | 2 | Minimum points required for a valid drawing |
 | `onDragEvent` | () => void | undefined | Callback when user starts drawing |
 | `onCanvasChange` | (isEmpty: boolean) => void | undefined | Callback when canvas state changes |
 | `clearCanvas` | boolean | false | Set to true to clear the canvas |
@@ -86,16 +86,16 @@ export default App;
 All methods are accessible through the component ref:
 
 ```tsx
-const signatureRef = useRef<SimpleCanvasRef>(null);
+const canvasRef = useRef<SimpleCanvasRef>(null);
 ```
 
 | Method | Description |
 |--------|-------------|
-| `getSVG()` | Returns the SVG reference of the signature |
+| `getSVG()` | Returns the SVG reference of the vanvas |
 | `resetImage()` | Clears the canvas and resets all points |
 | `isEmpty()` | Returns true if the canvas is empty |
-| `getPoints()` | Returns an array of raw signature points |
-| `setPoints(points: Point[])` | Sets the signature from existing points |
+| `getPoints()` | Returns an array of raw canvas points |
+| `setPoints(points: Point[])` | Sets the canvas from existing points |
 
 ## Types
 

@@ -94,7 +94,7 @@ describe('SimpleCanvas', () => {
     expect(tree.toJSON()).toMatchSnapshot();
   });
 
-  it('resets the signature', async () => {
+  it('resets the canvas', async () => {
     const ref = createRef<SimpleCanvasRef>();
     const tree = await renderAndWaitEffects(<SimpleCanvas ref={ref} />);
 
