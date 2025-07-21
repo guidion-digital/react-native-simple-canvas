@@ -1,7 +1,9 @@
 import React, { createRef } from 'react';
-import { SimpleCanvas, SimpleCanvasRef } from '../src/SimpleCanvas/SimpleCanvas';
-import renderer, { act, create } from 'react-test-renderer';
+import { act } from 'react-test-renderer';
 import { View } from 'react-native';
+
+import { SimpleCanvas, SimpleCanvasRef } from '../src/SimpleCanvas';
+import { renderAndWaitEffects } from './helpers/helpers';
 
 const mockTouchEvent = {
   nativeEvent: {
@@ -50,16 +52,15 @@ const mockOutOfContainerMoveEvent = {
 };
 
 describe('SimpleCanvas', () => {
-  it('should render', () => {
-    const tree = renderer.create(
-      <SimpleCanvas onDragEvent={() => {}} onCanvasChange={() => {}} />).toJSON();
-    expect(tree).toMatchSnapshot();
+  it('should render', async () => {
+    const tree = await renderAndWaitEffects(<SimpleCanvas onDragEvent={() => {}} onCanvasChange={() => {}} />);
+    expect(tree.toJSON()).toMatchSnapshot();
   });
 
-  it('calls onDragEvent when starting to draw', () => {
+  it('calls onDragEvent when starting to draw', async () => {
     const onDragEvent = jest.fn();
-    const component = create(<SimpleCanvas onDragEvent={onDragEvent} />);
-    const views = component.root.findAllByType(View);
+    const tree = await renderAndWaitEffects(<SimpleCanvas onDragEvent={onDragEvent} />);
+    const views = tree.root.findAllByType(View);
     const panHandler = views[1];
 
     act(() => {
@@ -75,10 +76,10 @@ describe('SimpleCanvas', () => {
     expect(onDragEvent).toHaveBeenCalled();
   });
 
-  it('stops drawing when out of container', () => {
+  it('stops drawing when out of container', async () => {
     const onDragEvent = jest.fn();
-    const component = create(<SimpleCanvas onDragEvent={onDragEvent} />);
-    const views = component.root.findAllByType(View);
+    const tree = await renderAndWaitEffects(<SimpleCanvas onDragEvent={onDragEvent} />);
+    const views = tree.root.findAllByType(View);
     const panHandler = views[1];
 
     act(() => {
@@ -90,16 +91,15 @@ describe('SimpleCanvas', () => {
     act(() => panHandler.props.onResponderMove(mockOutOfContainerMoveEvent));
 
     expect(onDragEvent).toHaveBeenCalled();
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(tree.toJSON()).toMatchSnapshot();
   });
 
-  it('resets the signature', () => {
+  it('resets the canvas', async () => {
     const ref = createRef<SimpleCanvasRef>();
-    const component = create(<SimpleCanvas ref={ref} />);
+    const tree = await renderAndWaitEffects(<SimpleCanvas ref={ref} />);
 
+    const views = tree.root.findAllByType(View);
     act(() => {
-      const instance = component.root;
-      const views = instance.findAllByType(View);
       views[1].props.onResponderGrant(mockTouchEvent);
     });
 
@@ -109,8 +109,7 @@ describe('SimpleCanvas', () => {
       ref.current?.resetImage();
     });
 
-    const instance = component.root;
-    const paths = instance.findAllByProps({ stroke: 'black' });
+    const paths = tree.root.findAllByProps({ stroke: 'black' });
     expect(paths.length).toBe(0);
   });
 });
