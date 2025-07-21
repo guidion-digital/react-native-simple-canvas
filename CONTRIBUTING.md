@@ -2,16 +2,6 @@
 
 We love contributions! This document explains how to contribute to the React Native Simple Canvas project.
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js >= 18
-- npm
-- React Native development environment (for testing)
-- For iOS development: Xcode and CocoaPods
-- For Android development: Android Studio and SDK
-
 ### Development Setup
 
 1. **Fork and clone the repository**
@@ -21,6 +11,8 @@ We love contributions! This document explains how to contribute to the React Nat
    ```
 
 2. **Install dependencies**
+
+   After checking out the repo, to install:
    ```bash
    npm install
    ```
@@ -35,15 +27,7 @@ We love contributions! This document explains how to contribute to the React Nat
    cd example
    npm install
    ```
-
-5. **For iOS (if developing on macOS)**
-   ```bash
-   cd ios
-   pod install
-   cd ..
    ```
-
-## Development Workflow
 
 ### Testing Your Changes
 
@@ -55,16 +39,6 @@ We love contributions! This document explains how to contribute to the React Nat
 2. **Run tests**
    ```bash
    npm test
-   ```
-
-3. **Run tests in watch mode during development**
-   ```bash
-   npm run test-watch
-   ```
-
-4. **Check test coverage**
-   ```bash
-   npm run coverage
    ```
 
 ### Testing with the Example App
