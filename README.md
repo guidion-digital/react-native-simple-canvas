@@ -16,6 +16,7 @@ A simple canvas component for React Native that allows drawing and signature cap
 ## Demo
 
 <img src="https://github.com/guidion-digital/react-native-simple-canvas/blob/acc/screenshot/simple-canvas-demo.gif" alt="SimpleCanvas Demo" width="50%">
+
 ## Installation
 
 ```bash
