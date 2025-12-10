@@ -51,7 +51,6 @@ export const SimpleCanvas = ({
   const isDrawing = useRef(false);
 
   const canvasRef = useRef<View>(null);
-  const canvasOffset = useRef({ x: 0, y: 0 });
 
   const addPoint = useCallback((point: Point) => {
     pointsRef.current.push(point);
@@ -81,22 +80,15 @@ export const SimpleCanvas = ({
     onCanvasChange?.(false);
   }, [minPoints, onCanvasChange]);
 
-  const onLayout = useCallback(() => {
-    canvasRef.current?.measureInWindow((x, y) => {
-      canvasOffset.current = { x, y };
-    });
-  }, []);
-
   const panResponder = useMemo(
     () =>
       PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onMoveShouldSetPanResponder: () => true,
         onPanResponderGrant: (event) => {
-          const { pageX, pageY } = event.nativeEvent;
           const point = {
-            x: pageX - canvasOffset.current.x,
-            y: pageY - canvasOffset.current.y
+            x: event.nativeEvent.locationX,
+            y: event.nativeEvent.locationY
           };
           isDrawing.current = true;
           pointsRef.current = [point];
@@ -105,10 +97,9 @@ export const SimpleCanvas = ({
         },
         onPanResponderMove: (event) => {
           if (!isDrawing.current) return;
-          const { pageX, pageY } = event.nativeEvent;
           const point = {
-            x: pageX - canvasOffset.current.x,
-            y: pageY - canvasOffset.current.y
+            x: event.nativeEvent.locationX,
+            y: event.nativeEvent.locationY
           };
 
           if (addPoint(point)) {
@@ -158,7 +149,6 @@ export const SimpleCanvas = ({
     <View style={[styles.container, style]}>
       <View
         ref={canvasRef}
-        onLayout={onLayout}
         style={[styles.canvas, { backgroundColor }]}
         {...panResponder.panHandlers}
       >
