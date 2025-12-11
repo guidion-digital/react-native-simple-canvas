@@ -21,6 +21,7 @@ interface SimpleCanvasProps {
   backgroundColor?: string;
   style?: ViewStyle;
   minPoints?: number;
+  safeAreaTop?: number;
 }
 
 export interface SimpleCanvasRef {
@@ -43,6 +44,7 @@ export const SimpleCanvas = ({
   backgroundColor = 'transparent',
   style,
   minPoints = 2,
+  safeAreaTop = 0,
   ref,
 }: SimpleCanvasProps) => {
   const [paths, setPaths] = useState<string[]>([]);
@@ -96,7 +98,7 @@ export const SimpleCanvas = ({
           const { pageX, pageY } = event.nativeEvent;
           const point = {
             x: pageX - canvasOffset.current.x,
-            y: pageY - canvasOffset.current.y
+            y: pageY - canvasOffset.current.y - safeAreaTop,
           };
           isDrawing.current = true;
           pointsRef.current = [point];
@@ -108,7 +110,7 @@ export const SimpleCanvas = ({
           const { pageX, pageY } = event.nativeEvent;
           const point = {
             x: pageX - canvasOffset.current.x,
-            y: pageY - canvasOffset.current.y
+            y: pageY - canvasOffset.current.y - safeAreaTop,
           };
 
           if (addPoint(point)) {
@@ -127,7 +129,7 @@ export const SimpleCanvas = ({
           isDrawing.current = false;
         },
       }),
-    [onDragEvent, addPoint, minPoints, onCanvasChange]
+    [onDragEvent, addPoint, minPoints, onCanvasChange, safeAreaTop]
   );
 
   useImperativeHandle<SimpleCanvasRef, SimpleCanvasRef>(ref, () => ({
