@@ -13,9 +13,6 @@ A simple canvas component for React Native that allows drawing and signature cap
 - TypeScript support
 - Lightweight and performant
 
-## Demo
-
-<img src="https://github.com/guidion-digital/react-native-simple-canvas/blob/acc/screenshot/simple-canvas-demo.gif" alt="SimpleCanvas Demo" width="50%">
 ## Installation
 
 ```bash
@@ -34,6 +31,10 @@ This package requires the following peer dependencies:
 - react: ^18.2.0
 - react-native: ^0.74.2
 - react-native-svg: ^15.4.0
+
+## Demo
+
+<img src="https://github.com/guidion-digital/react-native-simple-canvas/blob/prod/screenshot/simple-canvas-demo.gif?raw=true" alt="SimpleCanvas Demo" width="50%">
 
 ## Usage
 
@@ -72,6 +73,7 @@ export default App;
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| `safeAreaTop` | number | 0 | SafeArea top value. You can use a library of your choice like `react-native-safe-area-context`
 | `strokeColor` | string | 'black' | Color of the line stroke |
 | `strokeWidth` | number | 3 | Width of the line stroke |
 | `backgroundColor` | string | 'transparent' | Background color of the canvas |
@@ -162,3 +164,6 @@ If you encounter an error like: `Invalid hook call. Hooks can only be called ins
    ```
 
 4. **Check for peer dependency mismatches**: Verify that this library's peer dependencies align with your project versions.
+
+### Drawing is shifted small distance from a place where you put your finger
+Check `safeAreaTop` property and pass value from a library that manages SafeArea in your app.

@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { PanResponder, StyleSheet, View, ViewStyle } from 'react-native';
+import { PanResponder, Platform, StyleSheet, View, ViewStyle } from 'react-native';
 import { Path, Svg } from 'react-native-svg';
 
 import { Point } from './interfaces/Point';
@@ -21,6 +21,7 @@ interface SimpleCanvasProps {
   backgroundColor?: string;
   style?: ViewStyle;
   minPoints?: number;
+  safeAreaTop: number;
 }
 
 export interface SimpleCanvasRef {
@@ -43,6 +44,7 @@ export const SimpleCanvas = ({
   backgroundColor = 'transparent',
   style,
   minPoints = 2,
+  safeAreaTop,
   ref,
 }: SimpleCanvasProps) => {
   const [paths, setPaths] = useState<string[]>([]);
@@ -52,6 +54,8 @@ export const SimpleCanvas = ({
 
   const canvasRef = useRef<View>(null);
   const canvasOffset = useRef({ x: 0, y: 0 });
+
+  const safeAreaTopValue = Platform.OS === 'android' ? safeAreaTop : 0;
 
   const addPoint = useCallback((point: Point) => {
     pointsRef.current.push(point);
@@ -96,7 +100,7 @@ export const SimpleCanvas = ({
           const { pageX, pageY } = event.nativeEvent;
           const point = {
             x: pageX - canvasOffset.current.x,
-            y: pageY - canvasOffset.current.y
+            y: pageY - canvasOffset.current.y - safeAreaTopValue,
           };
           isDrawing.current = true;
           pointsRef.current = [point];
@@ -108,7 +112,7 @@ export const SimpleCanvas = ({
           const { pageX, pageY } = event.nativeEvent;
           const point = {
             x: pageX - canvasOffset.current.x,
-            y: pageY - canvasOffset.current.y
+            y: pageY - canvasOffset.current.y - safeAreaTopValue,
           };
 
           if (addPoint(point)) {
@@ -127,7 +131,7 @@ export const SimpleCanvas = ({
           isDrawing.current = false;
         },
       }),
-    [onDragEvent, addPoint, minPoints, onCanvasChange]
+    [onDragEvent, addPoint, minPoints, onCanvasChange, safeAreaTopValue]
   );
 
   useImperativeHandle<SimpleCanvasRef, SimpleCanvasRef>(ref, () => ({

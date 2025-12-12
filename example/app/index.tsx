@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import {
   Alert,
   AppRegistry,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -11,12 +10,25 @@ import {
 } from 'react-native';
 import { clearCanvas, SimpleCanvas } from '@gdn/react-native-simple-canvas';
 import type { SimpleCanvasRef } from '@gdn/react-native-simple-canvas';
+import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-function App(): React.ReactElement {
+function App (): React.ReactElement {
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <AppContent />
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
+}
+
+function AppContent(): React.ReactElement {
   const canvasRef = useRef<SimpleCanvasRef>(null);
   const [strokeColor, setStrokeColor] = useState('#000000');
   const [strokeWidth, setStrokeWidth] = useState(3);
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
+
+  const safeAreaInsets = useSafeAreaInsets();
 
   const handleClear = () => {
     clearCanvas(canvasRef);
@@ -64,7 +76,7 @@ function App(): React.ReactElement {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
 
       <View style={styles.containerView}>
@@ -74,7 +86,10 @@ function App(): React.ReactElement {
           onDragEvent={handleDragEvent}
           strokeColor={strokeColor}
           strokeWidth={strokeWidth}
+          safeAreaTop={safeAreaInsets.top}
         />
+        
+        <View style={{ position: 'absolute', top: 350, left: 50, width: 100, height: 100, backgroundColor: 'red' }}/>
 
         <View>
           <Text style={styles.sectionTitle}>
@@ -126,7 +141,7 @@ function App(): React.ReactElement {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
