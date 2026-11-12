@@ -13,6 +13,7 @@ jobs:
     with:
       concurrency_name: "${{github.ref}}"
       enable_linting: false
+      enable_npmrc_echo: true
       node_version: 26
   release:
     name: Release
@@ -26,4 +27,5 @@ jobs:
       id-token: write
     with:
       environment_name: "prod"
+      enable_npmrc_echo: true
       node_version: 26

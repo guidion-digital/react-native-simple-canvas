@@ -26,7 +26,8 @@
     "build": "npx rimraf dist && tsc",
     "semantic-release": "semantic-release",
     "lint": "eslint -c eslint.config.mjs \"?(src|__tests__)/**/*.ts{,x}\"",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "setup-node-version": "npx setupNodeVersion --version=26"
   },
   "peerDependencies": {
     "react": ">=18.2.0",
@@ -38,6 +39,7 @@
   "description": "",
   "devDependencies": {
     "@eslint/js": "^9.31.0",
+    "@gdn/js-backend-toolkit": "^3.2.1",
     "@react-native/babel-preset": "^0.80.1",
     "@react-native/eslint-config": "^0.80.1",
     "@stylistic/eslint-plugin": "^5.1.0",
